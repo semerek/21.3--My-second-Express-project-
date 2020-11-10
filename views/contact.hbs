@@ -9,7 +9,7 @@
     You can't leave fields empty
     {{/if}}
 </div>
-<form action="/contact/send-message" method="POST">
+<form action="/contact/send-message" method="POST"  enctype="multipart/form-data">
   <label>
     Your name: <input type="text" name="author">
   </label>
@@ -22,5 +22,6 @@
    <label>
     Message: <textarea name="message"></textarea>
   </label>
+  <input type="file"  name="file" accept=".gif,.jpg,.jpeg,.png">
   <button type="submit">Send message</button>
 </form>
