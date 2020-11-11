@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
+const multer  = require('multer')
+const upload = multer({ dest: 'public/' })
 
 
 const app = express();
@@ -12,6 +14,10 @@ app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(express.urlencoded({ extended: false }));
+
+app.post('/public', upload.single('file'), function (req, res, next) {
+  console.log(req.file)
+})
 
 app.get('/', (req, res) => {
   res.render('index');
