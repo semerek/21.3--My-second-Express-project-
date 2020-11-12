@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({ extended: false }));
 
 app.post('/public', upload.single('file'), function (req, res, next) {
-  console.log(req.file)
+  console.log(req.file) // apply multer
 })
 
 app.get('/', (req, res) => {
