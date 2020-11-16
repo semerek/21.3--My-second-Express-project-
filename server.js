@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
 const multer  = require('multer')
-const upload = multer({ dest: 'public/' })
+var upload=multer({dest:"uploads/"});
 
 
 const app = express();
@@ -15,9 +15,6 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(express.urlencoded({ extended: false }));
 
-app.post('/public', upload.single('file'), function (req, res, next) {
-  console.log(req.file) // apply multer
-})
 
 app.get('/', (req, res) => {
   res.render('index');
@@ -43,12 +40,16 @@ app.get('/history', (req, res) => {
   res.render('history');
 });
 
-app.post('/contact/send-message', (req, res) => {
 
-  const { author, sender, title, message, file } = req.body;
+app.post('/contact/send-message', "/multer", upload.single('file'),  (req, res) => {
+
+
+  const { author, sender, title, message } = req.body;
+  const  file = req.file.originalname;
+
 
   if(author && sender && title && message && file) {
-    res.render('contact', {isSent: true});
+    res.render('contact', {isSent: true, file});
   }
   else {
     res.render('contact', {isError: true});
