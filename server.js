@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
 const multer  = require('multer')
-var upload=multer({dest:"uploads/"});
+const upload = multer({ dest: 'public/' })
 
 
 const app = express();
@@ -14,7 +14,6 @@ app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(express.urlencoded({ extended: false }));
-
 
 app.get('/', (req, res) => {
   res.render('index');
@@ -41,11 +40,16 @@ app.get('/history', (req, res) => {
 });
 
 
-app.post('/contact/send-message', "/multer", upload.single('file'),  (req, res) => {
+app.post('/public', upload.single('file'), function (req, res, next) {	
+  console.log(req.file);
+});
 
+app.post('/contact/send-message', upload.single('file'), (req, res) => {
 
-  const { author, sender, title, message } = req.body;
-  const  file = req.file.originalname;
+  const { author, sender, title, message} = req.body;
+  const { file} = req.file.name;
+  console.log('file', file);
+
 
 
   if(author && sender && title && message && file) {
@@ -65,4 +69,3 @@ app.use((req, res) => {
 app.listen(8000, () => {
   console.log('Server is running on port: 8000');
 });
-
