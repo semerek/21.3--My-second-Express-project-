@@ -1,15 +1,15 @@
 <h2>Contact me</h2>
-<div>
-    {{#if isSent}}
-    The message and the {{file}} have been sent! 
-    {{/if}}
-</div>
-<div>
-    {{#if isError}}
-    You can't leave fields empty!
-    {{/if}}
-</div>
 <form action="/contact/send-message" method="POST" enctype="multipart/form-data">
+  {{#if isSent}}
+  <div class="isSent">
+    The message and the {{fileName}} have been sent!
+  </div>
+  {{/if}}
+  {{#if isError}}
+  <div class="isError">
+    You can't leave fields empty!
+  </div>
+  {{/if}}
   <label>
     Your name: <input type="text" name="author">
   </label>
@@ -19,11 +19,11 @@
   <label>
     Title: <input type="text" name="title">
   </label>
-   <label>
+  <label>
     Message: <textarea name="message"></textarea>
   </label>
   <label>
-  Send file: <input type="file" name="file" accept=".gif,.jpg,.jpeg,.png">
+    Send file: <input type="file" name="file" accept=".gif,.jpg,.jpeg,.png">
   </label>
   <button type="submit">Send message</button>
 </form>
